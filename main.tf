@@ -24,12 +24,12 @@ provider "azurerm" {
 data "azurerm_client_config" "current" {}
 # Create our Resource Group - Jonnychipz-RG
 resource "azurerm_resource_group" "rg" {
-  name     = "jonnychipz-app01"
+  name     = "azhar-app01"
   location = "UK South"
 }
 # Create our Virtual Network - Jonnychipz-VNET
 resource "azurerm_virtual_network" "vnet" {
-  name                = "jonnychipzvnet"
+  name                = "azharchipzvnet"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -43,18 +43,18 @@ resource "azurerm_subnet" "sn" {
 }
 # Create our Azure Storage Account - jonnychipzsa
 resource "azurerm_storage_account" "jonnychipzsa" {
-  name                     = "jonnychipzsa"
+  name                     = "azharsa"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
   tags = {
-    environment = "jonnychipzrox"
+    environment = "azharrox"
   }
 }
 # Create our vNIC for our VM and assign it to our Virtual Machines Subnet
 resource "azurerm_network_interface" "vmnic" {
-  name                = "jonnychipzvm01nic"
+  name                = "azhar"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   
@@ -66,11 +66,11 @@ resource "azurerm_network_interface" "vmnic" {
 }
 # Create our Virtual Machine - Jonnychipz-VM01
 resource "azurerm_virtual_machine" "jonnychipzvm01" {
-  name                  = "jonnychipzvm01"
+  name                  = "azharulhaqvm01"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.vmnic.id]
-  vm_size               = "Standard_B2s"
+  vm_size               = "Standard_DS1_v2"
   storage_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
@@ -78,13 +78,13 @@ resource "azurerm_virtual_machine" "jonnychipzvm01" {
     version   = "latest"
   }
   storage_os_disk {
-    name              = "jonnychipzvm01os"
+    name              = "azharulhaqvm01os"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
   os_profile {
-    computer_name      = "jonnychipzvm01"
+    computer_name      = "azharulhaqvm01"
     admin_username     = "jonnychipz"
     admin_password     = "Password123$"
   }
