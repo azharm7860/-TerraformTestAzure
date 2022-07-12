@@ -1,22 +1,22 @@
+# Azure Provider source and version being used
 terraform {
-  backend "azurerm" {
-    resource_group_name  = "jonnychipz-infra"
-    storage_account_name = "jonnychipztstate"
-    container_name       = "tstate"
-    key                  = "77Q4LUB5o9wRdbPYDt+0kGZP+L8Sj9E/FNXg7lZBQS5z3mLod5cyan4wA19CR1SmlqIRUFQfhuQrPVaGzNhjGw=="
-  }
-
   required_providers {
     azurerm = {
       # Specify what version of the provider we are going to utilise
-      source  = "hashicorp/azurerm"
+      source = "hashicorp/azurerm"
       version = ">= 2.4.1"
     }
   }
+backend "azurerm" {
+    resource_group_name   = "azhar-infrast"
+    storage_account_name  = "azharmtstate"
+    container_name        = "tstate"
+    key                   = "BsZqWXMs8FCW7E32oRFDnZ+mMwJAFadkNY4hGhVKEQlPYD4/eEGbQbB3jSS7f6FY5XxiroZnvjoj+AStydC1VQ=="
+    }
 }
 provider "azurerm" {
   features {
-    key_vault {
+      key_vault {
       purge_soft_delete_on_destroy = true
     }
   }
@@ -39,7 +39,7 @@ resource "azurerm_subnet" "sn" {
   name                 = "VM"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.0.1.0/24"]
+  address_prefixes       = ["10.0.1.0/24"]
 }
 # Create our Azure Storage Account - jonnychipzsa
 resource "azurerm_storage_account" "jonnychipzsa" {
@@ -49,7 +49,7 @@ resource "azurerm_storage_account" "jonnychipzsa" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
   tags = {
-    environment = "jonnychipzenv1"
+    environment = "jonnychipzrox"
   }
 }
 # Create our vNIC for our VM and assign it to our Virtual Machines Subnet
@@ -57,7 +57,7 @@ resource "azurerm_network_interface" "vmnic" {
   name                = "jonnychipzvm01nic"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-
+  
   ip_configuration {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.sn.id
@@ -84,9 +84,9 @@ resource "azurerm_virtual_machine" "jonnychipzvm01" {
     managed_disk_type = "Standard_LRS"
   }
   os_profile {
-    computer_name  = "jonnychipzvm01"
-    admin_username = "jonnychipz"
-    admin_password = "Password123$"
+    computer_name      = "jonnychipzvm01"
+    admin_username     = "jonnychipz"
+    admin_password     = "Password123$"
   }
   os_profile_windows_config {
   }
