@@ -22,12 +22,12 @@ provider "azurerm" {
   }
 }
 data "azurerm_client_config" "current" {}
-# Create our Resource Group - Jonnychipz-RG
+# Create our Resource Group - Azhar-RG
 resource "azurerm_resource_group" "rg" {
   name     = "azhar-app01"
   location = "East US"
 }
-# Create our Virtual Network - Jonnychipz-VNET
+# Create our Virtual Network - Azhar-VNET
 resource "azurerm_virtual_network" "vnet" {
   name                = "azharchipzvnet"
   address_space       = ["10.0.0.0/16"]
@@ -41,8 +41,8 @@ resource "azurerm_subnet" "sn" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes       = ["10.0.1.0/24"]
 }
-# Create our Azure Storage Account - jonnychipzsa
-resource "azurerm_storage_account" "jonnychipzsa" {
+# Create our Azure Storage Account - Azhar
+resource "azurerm_storage_account" "azharulhaqsa" {
   name                     = "azharsa"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
@@ -65,7 +65,7 @@ resource "azurerm_network_interface" "vmnic" {
   }
 }
 # Create our Virtual Machine - Jonnychipz-VM01
-resource "azurerm_virtual_machine" "jonnychipzvm01" {
+resource "azurerm_virtual_machine" "azharulhaqvm01" {
   name                  = "azharulhaqvm01"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
@@ -85,7 +85,7 @@ resource "azurerm_virtual_machine" "jonnychipzvm01" {
   }
   os_profile {
     computer_name      = "azharulhaqvm01"
-    admin_username     = "jonnychipz"
+    admin_username     = "azharulhaq01"
     admin_password     = "Password123$"
   }
   os_profile_windows_config {
